@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mgreetingText;
     private EditText mNameInput;
     private Button mPlayButton;
+    private Button mHistoriqueButton;
     private User mUser;
 
     private SharedPreferences mPreferences;
@@ -47,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         mgreetingText = (TextView)findViewById(R.id.activity_main_greeting_txt);
         mNameInput = (EditText)findViewById(R.id.activity_main_name_input);
         mPlayButton = (Button)findViewById(R.id.activity_main_play_btn);
+        mHistoriqueButton = (Button)findViewById(R.id.activity_main_historique_btn);
+
+        if(mPreferences.getAll() == null){
+            mHistoriqueButton.setVisibility(mHistoriqueButton.INVISIBLE);
+        }
+        else {
+            mHistoriqueButton.setVisibility(mHistoriqueButton.VISIBLE);
+        }
 
         mPlayButton.setEnabled(false);
 
@@ -75,11 +84,19 @@ public class MainActivity extends AppCompatActivity {
                 mPreferences.edit().putString(PREFERENCES_FIRSTNAME,mUser.getFirstname()).apply();
 
                 Intent gameActivity = new Intent(MainActivity.this,GameActivity.class);
-                startActivity(gameActivity);
+                //startActivity(gameActivity);
                 startActivityForResult(gameActivity,GAME_ACTIVITY_REQUEST_CODE);
             }
         });
 
+        mHistoriqueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent historiqueActivity = new Intent(MainActivity.this,HistoriqueActivity.class);
+                startActivity(historiqueActivity);
+            }
+        });
 
     }
 }
